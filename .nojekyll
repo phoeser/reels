@@ -1,0 +1,3 @@
+Diese Datei sorgt dafuer, dass GitHub Pages die Dateien unveraendert ausliefert
+und nicht durch Jekyll schickt. Ohne sie werden Ordner und Dateien, die mit einem
+Unterstrich beginnen, stillschweigend weggelassen.
