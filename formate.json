@@ -1,0 +1,54 @@
+{
+  "$kommentar": "Katalog der Videoformate der Reel-Fabrik. render.py --format <schluessel>. Eine Kopie liegt oeffentlich in phoeser/reels, damit das Post-Studio weiss, was es bestellen kann.",
+  "stand": "2026-09-03",
+  "ausgabe": {
+    "hoch": { "breite": 1080, "hoehe": 1920, "fps": 25, "video": "h264 crf 21", "ton": "aac 128k, loudnorm I=-14 (nur wenn Ton)" },
+    "laenge_s": { "min": 15, "max": 45, "empfohlen": 30 }
+  },
+  "formate": {
+    "score": {
+      "name": "Score-Karte",
+      "zweck": "Ein Wirkstoff von biohackingkompakt.de als Karte: fuenf Achsen, Label, Berichtslage, Stempel.",
+      "pflicht": ["--thema"],
+      "optional": ["--unter", "--quelle", "--laenge"],
+      "quelle": "scores.json (lokal ueber --scores oder von biohackingkompakt.de)",
+      "felder": [
+        { "id": "thema",  "label": "Wirkstoff",              "art": "scores",   "pflicht": true },
+        { "id": "unter",  "label": "Untertitel (optional)",  "art": "text",     "pflicht": false, "max": 60 },
+        { "id": "laenge", "label": "Länge",                  "art": "laenge",   "pflicht": false, "werte": [30, 14] }
+      ],
+      "aufbau": [
+        { "ab_s": 0.0,  "zeigt": "Titel und Untertitel" },
+        { "ab_s": 2.5,  "zeigt": "die fuenf Achsen bauen sich im Takt auf" },
+        { "ab_s": 17.5, "zeigt": "Label und, bei richtung offen/negativ, der Einordnungssatz" },
+        { "ab_s": 20.8, "zeigt": "Berichtslage: WAS BERICHTET WIRD im bernsteinfarbenen Rahmen" },
+        { "ab_s": 24.5, "zeigt": "Stempel mit Beleg und Quelle" }
+      ],
+      "hinweis": "Ohne berichtslage im Eintrag entfaellt der vorletzte Block; render.py warnt auf stderr. Steht eine id in mehreren Ansichten, meldet render.py das und nennt die Wege: --thema ansicht:id, etwa tipps:hbot.",
+      "beispiel": "python3 render.py --format score --thema glucosamin --laenge 30 --out /tmp/glucosamin.mp4"
+    },
+    "dreizeilen": {
+      "name": "Drei Zeilen + Pointe",
+      "zweck": "Drei Aussagen zum selben Wort (erlaubt / kommt an / gezeigt), danach die Pointe — fuer Aussagen ohne Score-Eintrag.",
+      "pflicht": ["--titel", "--text"],
+      "optional": ["--leitwort", "--labels", "--quelle", "--laenge"],
+      "quelle": "Freitext",
+      "felder": [
+        { "id": "titel",    "label": "Titel",                                  "art": "text", "pflicht": true,  "max": 40 },
+        { "id": "erlaubt",  "label": "Zeile 1 — was erlaubt/behauptet wird",   "art": "text", "pflicht": true,  "max": 90 },
+        { "id": "ankommt",  "label": "Zeile 2 — was ankommt/gemessen wird",    "art": "text", "pflicht": true,  "max": 90 },
+        { "id": "gezeigt",  "label": "Zeile 3 — was gezeigt ist",              "art": "text", "pflicht": true,  "max": 90 },
+        { "id": "pointe",   "label": "Pointe",                                 "art": "text", "pflicht": true,  "max": 90 },
+        { "id": "leitwort", "label": "Leitwort (wird hervorgehoben, optional)", "art": "text", "pflicht": false, "max": 30 },
+        { "id": "quelle",   "label": "Quelle im Stempel (optional)",           "art": "text", "pflicht": false, "max": 150 },
+        { "id": "laenge",   "label": "Länge",                                  "art": "laenge", "pflicht": false, "werte": [30, 20] }
+      ],
+      "hinweis": "--text braucht genau vier durch | getrennte Teile: erlaubt | ankommt | gezeigt | pointe. --labels ersetzt die drei Ueberschriften (drei Teile, mit | getrennt).",
+      "beispiel": "python3 render.py --format dreizeilen --titel 'Kreatin' --leitwort Kreatin --text 'Erlaubt ist …|An kommt …|Gezeigt ist …|Die Pointe.' --out /tmp/kreatin.mp4"
+    }
+  },
+  "noch_nicht_parametrisiert": {
+    "$kommentar": "Diese Renderer liegen in renderer/, sind aber noch auf feste Themen verdrahtet und deshalb nicht ueber render.py erreichbar.",
+    "eintraege": ["negativ.py", "moderiert.py", "splitscreen.py", "zwei.py", "zweisaetze.py", "formate4.py"]
+  }
+}
