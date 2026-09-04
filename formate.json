@@ -1,28 +1,87 @@
 {
   "$kommentar": "Katalog der Videoformate der Reel-Fabrik. render.py --format <schluessel>. Eine Kopie liegt oeffentlich in phoeser/reels, damit das Post-Studio weiss, was es bestellen kann.",
-  "stand": "2026-09-03",
+  "stand": "2026-09-04",
   "ausgabe": {
-    "hoch": { "breite": 1080, "hoehe": 1920, "fps": 25, "video": "h264 crf 21", "ton": "aac 128k, loudnorm I=-14 (nur wenn Ton)" },
-    "laenge_s": { "min": 15, "max": 45, "empfohlen": 30 }
+    "hoch": {
+      "breite": 1080,
+      "hoehe": 1920,
+      "fps": 25,
+      "video": "h264 crf 21",
+      "ton": "aac 128k, loudnorm I=-14 (nur wenn Ton)"
+    },
+    "laenge_s": {
+      "min": 15,
+      "max": 45,
+      "empfohlen": 30
+    }
   },
   "formate": {
     "score": {
       "name": "Score-Karte",
       "zweck": "Ein Wirkstoff von biohackingkompakt.de als Karte: fuenf Achsen, Label, Berichtslage, Stempel.",
-      "pflicht": ["--thema"],
-      "optional": ["--unter", "--quelle", "--laenge"],
+      "pflicht": [
+        "--thema"
+      ],
+      "optional": [
+        "--unter",
+        "--quelle",
+        "--laenge",
+        "--stimme"
+      ],
       "quelle": "scores.json (lokal ueber --scores oder von biohackingkompakt.de)",
       "felder": [
-        { "id": "thema",  "label": "Wirkstoff",              "art": "scores",   "pflicht": true },
-        { "id": "unter",  "label": "Untertitel (optional)",  "art": "text",     "pflicht": false, "max": 60 },
-        { "id": "laenge", "label": "Länge",                  "art": "laenge",   "pflicht": false, "werte": [30, 14] }
+        {
+          "id": "thema",
+          "label": "Wirkstoff",
+          "art": "scores",
+          "pflicht": true
+        },
+        {
+          "id": "unter",
+          "label": "Untertitel (optional)",
+          "art": "text",
+          "pflicht": false,
+          "max": 60
+        },
+        {
+          "id": "laenge",
+          "label": "Länge",
+          "art": "laenge",
+          "pflicht": false,
+          "werte": [
+            30,
+            14
+          ]
+        },
+        {
+          "name": "stimme",
+          "art": "datei",
+          "pflicht": false,
+          "label": "Sprechskript (JSON)",
+          "hinweis": "Segmente [Sprecher, Startzeit, Text]; Sprecher ist Paul oder Paula. Ohne Skript bleibt der Clip stumm. Kostet ElevenLabs-Credits: rund ein Credit je Zeichen."
+        }
       ],
       "aufbau": [
-        { "ab_s": 0.0,  "zeigt": "Titel und Untertitel" },
-        { "ab_s": 2.5,  "zeigt": "die fuenf Achsen bauen sich im Takt auf" },
-        { "ab_s": 17.5, "zeigt": "Label und, bei richtung offen/negativ, der Einordnungssatz" },
-        { "ab_s": 20.8, "zeigt": "Berichtslage: WAS BERICHTET WIRD im bernsteinfarbenen Rahmen" },
-        { "ab_s": 24.5, "zeigt": "Stempel mit Beleg und Quelle" }
+        {
+          "ab_s": 0.0,
+          "zeigt": "Titel und Untertitel"
+        },
+        {
+          "ab_s": 2.5,
+          "zeigt": "die fuenf Achsen bauen sich im Takt auf"
+        },
+        {
+          "ab_s": 17.5,
+          "zeigt": "Label und, bei richtung offen/negativ, der Einordnungssatz"
+        },
+        {
+          "ab_s": 20.8,
+          "zeigt": "Berichtslage: WAS BERICHTET WIRD im bernsteinfarbenen Rahmen"
+        },
+        {
+          "ab_s": 24.5,
+          "zeigt": "Stempel mit Beleg und Quelle"
+        }
       ],
       "hinweis": "Ohne berichtslage im Eintrag entfaellt der vorletzte Block; render.py warnt auf stderr. Steht eine id in mehreren Ansichten, meldet render.py das und nennt die Wege: --thema ansicht:id, etwa tipps:hbot.",
       "beispiel": "python3 render.py --format score --thema glucosamin --laenge 30 --out /tmp/glucosamin.mp4"
@@ -30,25 +89,370 @@
     "dreizeilen": {
       "name": "Drei Zeilen + Pointe",
       "zweck": "Drei Aussagen zum selben Wort (erlaubt / kommt an / gezeigt), danach die Pointe — fuer Aussagen ohne Score-Eintrag.",
-      "pflicht": ["--titel", "--text"],
-      "optional": ["--leitwort", "--labels", "--quelle", "--laenge"],
+      "pflicht": [
+        "--titel",
+        "--text"
+      ],
+      "optional": [
+        "--leitwort",
+        "--labels",
+        "--quelle",
+        "--laenge",
+        "--stimme"
+      ],
       "quelle": "Freitext",
       "felder": [
-        { "id": "titel",    "label": "Titel",                                  "art": "text", "pflicht": true,  "max": 40 },
-        { "id": "erlaubt",  "label": "Zeile 1 — was erlaubt/behauptet wird",   "art": "text", "pflicht": true,  "max": 90 },
-        { "id": "ankommt",  "label": "Zeile 2 — was ankommt/gemessen wird",    "art": "text", "pflicht": true,  "max": 90 },
-        { "id": "gezeigt",  "label": "Zeile 3 — was gezeigt ist",              "art": "text", "pflicht": true,  "max": 90 },
-        { "id": "pointe",   "label": "Pointe",                                 "art": "text", "pflicht": true,  "max": 90 },
-        { "id": "leitwort", "label": "Leitwort (wird hervorgehoben, optional)", "art": "text", "pflicht": false, "max": 30 },
-        { "id": "quelle",   "label": "Quelle im Stempel (optional)",           "art": "text", "pflicht": false, "max": 150 },
-        { "id": "laenge",   "label": "Länge",                                  "art": "laenge", "pflicht": false, "werte": [30, 20] }
+        {
+          "id": "titel",
+          "label": "Titel",
+          "art": "text",
+          "pflicht": true,
+          "max": 40
+        },
+        {
+          "id": "erlaubt",
+          "label": "Zeile 1 — was erlaubt/behauptet wird",
+          "art": "text",
+          "pflicht": true,
+          "max": 90
+        },
+        {
+          "id": "ankommt",
+          "label": "Zeile 2 — was ankommt/gemessen wird",
+          "art": "text",
+          "pflicht": true,
+          "max": 90
+        },
+        {
+          "id": "gezeigt",
+          "label": "Zeile 3 — was gezeigt ist",
+          "art": "text",
+          "pflicht": true,
+          "max": 90
+        },
+        {
+          "id": "pointe",
+          "label": "Pointe",
+          "art": "text",
+          "pflicht": true,
+          "max": 90
+        },
+        {
+          "id": "leitwort",
+          "label": "Leitwort (wird hervorgehoben, optional)",
+          "art": "text",
+          "pflicht": false,
+          "max": 30
+        },
+        {
+          "id": "quelle",
+          "label": "Quelle im Stempel (optional)",
+          "art": "text",
+          "pflicht": false,
+          "max": 150
+        },
+        {
+          "id": "laenge",
+          "label": "Länge",
+          "art": "laenge",
+          "pflicht": false,
+          "werte": [
+            30,
+            20
+          ]
+        },
+        {
+          "name": "stimme",
+          "art": "datei",
+          "pflicht": false,
+          "label": "Sprechskript (JSON)",
+          "hinweis": "Segmente [Sprecher, Startzeit, Text]; Sprecher ist Paul oder Paula. Ohne Skript bleibt der Clip stumm. Kostet ElevenLabs-Credits: rund ein Credit je Zeichen."
+        }
       ],
       "hinweis": "--text braucht genau vier durch | getrennte Teile: erlaubt | ankommt | gezeigt | pointe. --labels ersetzt die drei Ueberschriften (drei Teile, mit | getrennt).",
       "beispiel": "python3 render.py --format dreizeilen --titel 'Kreatin' --leitwort Kreatin --text 'Erlaubt ist …|An kommt …|Gezeigt ist …|Die Pointe.' --out /tmp/kreatin.mp4"
+    },
+    "avatare": {
+      "name": "Avatare im Gespraech",
+      "zweck": "Paul und Paula als gezeichnete Figuren uebereinander; wer spricht, ist hell und bewegt den Mund, der andere hoert sichtbar zu.",
+      "pflicht": [
+        "--stimme"
+      ],
+      "optional": [
+        "--titel",
+        "--unter",
+        "--quelle",
+        "--laenge"
+      ],
+      "quelle": "Sprechskript; Figuren aus figuren/",
+      "felder": [
+        {
+          "id": "stimme",
+          "label": "Sprechskript (JSON)",
+          "art": "datei",
+          "pflicht": true,
+          "hinweis": "Segmente [Sprecher, Startzeit, Text]; Sprecher ist Paul oder Paula. PFLICHT bei diesem Format: die Mundbewegung wird aus der fertigen Tonspur gerechnet. Kostet ElevenLabs-Credits: rund ein Credit je Zeichen."
+        },
+        {
+          "id": "titel",
+          "label": "Rubrik in der Kopfzeile",
+          "art": "text",
+          "pflicht": false,
+          "max": 28
+        },
+        {
+          "id": "unter",
+          "label": "Fusszeile",
+          "art": "text",
+          "pflicht": false,
+          "max": 60
+        },
+        {
+          "id": "laenge",
+          "label": "Länge",
+          "art": "laenge",
+          "pflicht": false,
+          "werte": [
+            30,
+            20
+          ]
+        }
+      ],
+      "aufbau": [
+        {
+          "ab_s": 0.0,
+          "zeigt": "beide Figuren, der erste Sprecher wird hell"
+        },
+        {
+          "ab_s": 0.0,
+          "zeigt": "die laufende Aussage steht unten, ganze Saetze"
+        },
+        {
+          "ab_s": -4.8,
+          "zeigt": "Balkenreihe fuellt sich als Fortschritt"
+        }
+      ],
+      "hinweis": "Kein Wechselschnitt - beide bleiben im Bild. Der Reiz des Formats ist das Zuhoeren. Ohne --stimme bricht das Format ab."
+    },
+    "axolotl": {
+      "name": "Axolotl als Erzaehler",
+      "zweck": "Eine Figur, ein Satz gross darueber. Das Tier darf nachfragen, ohne zu belehren.",
+      "pflicht": [
+        "--stimme"
+      ],
+      "optional": [
+        "--titel",
+        "--unter",
+        "--quelle",
+        "--laenge"
+      ],
+      "quelle": "Sprechskript; Figur axolotl-b.png",
+      "felder": [
+        {
+          "id": "stimme",
+          "label": "Sprechskript (JSON)",
+          "art": "datei",
+          "pflicht": true,
+          "hinweis": "Segmente [Sprecher, Startzeit, Text]; Sprecher ist Paul oder Paula. PFLICHT bei diesem Format: die Mundbewegung wird aus der fertigen Tonspur gerechnet. Kostet ElevenLabs-Credits: rund ein Credit je Zeichen."
+        },
+        {
+          "id": "titel",
+          "label": "Rubrik in der Kopfzeile",
+          "art": "text",
+          "pflicht": false,
+          "max": 28
+        },
+        {
+          "id": "unter",
+          "label": "Fusszeile",
+          "art": "text",
+          "pflicht": false,
+          "max": 60
+        },
+        {
+          "id": "laenge",
+          "label": "Länge",
+          "art": "laenge",
+          "pflicht": false,
+          "werte": [
+            30,
+            20
+          ]
+        }
+      ],
+      "aufbau": [
+        {
+          "ab_s": 0.0,
+          "zeigt": "Satz oben, Axolotl unten, Mund folgt der Spur"
+        },
+        {
+          "ab_s": -4.8,
+          "zeigt": "das Tier rueckt hoch, der Beleg-Stempel kommt"
+        }
+      ],
+      "hinweis": "Der Axolotl spricht ALLE Rollen. Ein Skript mit zwei Stimmen wirkt hier falsch - fuer dieses Format ein einstimmiges Skript schreiben."
+    },
+    "reaktion": {
+      "name": "Reaktions-Split",
+      "zweck": "Oben eine Behauptung, wie man sie im Netz liest; unten die Figur, die sie einordnet. Die Behauptung wird durchgestrichen, wenn der Beleg faellt.",
+      "pflicht": [
+        "--stimme",
+        "--text"
+      ],
+      "optional": [
+        "--titel",
+        "--unter",
+        "--quelle",
+        "--laenge"
+      ],
+      "quelle": "Sprechskript; --text ist die Behauptung",
+      "felder": [
+        {
+          "id": "stimme",
+          "label": "Sprechskript (JSON)",
+          "art": "datei",
+          "pflicht": true,
+          "hinweis": "Segmente [Sprecher, Startzeit, Text]; Sprecher ist Paul oder Paula. PFLICHT bei diesem Format: die Mundbewegung wird aus der fertigen Tonspur gerechnet. Kostet ElevenLabs-Credits: rund ein Credit je Zeichen."
+        },
+        {
+          "id": "text",
+          "label": "Behauptung",
+          "art": "text",
+          "pflicht": true,
+          "max": 90,
+          "hinweis": "Neutral formulieren, ohne erkennbaren Anbieter. Ein zitierter Werbesatz einer benannten Firma macht aus dem Faktencheck eine Angriffsflaeche."
+        },
+        {
+          "id": "titel",
+          "label": "Rubrik in der Kopfzeile",
+          "art": "text",
+          "pflicht": false,
+          "max": 28
+        },
+        {
+          "id": "unter",
+          "label": "Fusszeile",
+          "art": "text",
+          "pflicht": false,
+          "max": 60
+        },
+        {
+          "id": "laenge",
+          "label": "Länge",
+          "art": "laenge",
+          "pflicht": false,
+          "werte": [
+            30,
+            20
+          ]
+        }
+      ],
+      "aufbau": [
+        {
+          "ab_s": 0.0,
+          "zeigt": "Behauptung im bernsteinfarbenen Kasten"
+        },
+        {
+          "ab_s": 0.4,
+          "zeigt": "roter Strich faehrt durch die Behauptung (Anteil der Laenge)"
+        },
+        {
+          "ab_s": -4.8,
+          "zeigt": "Beleg-Stempel"
+        }
+      ],
+      "hinweis": "Die Behauptung ist ein Satz, KEIN Zitat. Kein Anbietername, kein Screenshot."
+    },
+    "comic": {
+      "name": "Animiertes Comic",
+      "zweck": "Drei Panels, die nacheinander aufklappen; die Figur im Panel spricht weiter, waehrend das naechste aufgeht.",
+      "pflicht": [
+        "--stimme"
+      ],
+      "optional": [
+        "--titel",
+        "--unter",
+        "--quelle",
+        "--laenge"
+      ],
+      "quelle": "Sprechskript, die ersten drei Segmente werden zu den drei Panels",
+      "felder": [
+        {
+          "id": "stimme",
+          "label": "Sprechskript (JSON)",
+          "art": "datei",
+          "pflicht": true,
+          "hinweis": "Segmente [Sprecher, Startzeit, Text]; Sprecher ist Paul oder Paula. PFLICHT bei diesem Format: die Mundbewegung wird aus der fertigen Tonspur gerechnet. Kostet ElevenLabs-Credits: rund ein Credit je Zeichen."
+        },
+        {
+          "id": "titel",
+          "label": "Rubrik in der Kopfzeile",
+          "art": "text",
+          "pflicht": false,
+          "max": 28
+        },
+        {
+          "id": "unter",
+          "label": "Fusszeile",
+          "art": "text",
+          "pflicht": false,
+          "max": 60
+        },
+        {
+          "id": "laenge",
+          "label": "Länge",
+          "art": "laenge",
+          "pflicht": false,
+          "werte": [
+            30,
+            20
+          ]
+        }
+      ],
+      "aufbau": [
+        {
+          "ab_s": 0.0,
+          "zeigt": "Panel 1 klappt auf"
+        },
+        {
+          "ab_s": null,
+          "zeigt": "Panel 2 und 3 folgen zu den Startzeiten der Segmente"
+        },
+        {
+          "ab_s": -4.8,
+          "zeigt": "Panels ruecken zusammen, Beleg-Stempel"
+        }
+      ],
+      "hinweis": "Braucht mindestens drei Sprechsegmente. Der Blasentext wird kleiner gesetzt statt abgeschnitten."
     }
   },
   "noch_nicht_parametrisiert": {
     "$kommentar": "Diese Renderer liegen in renderer/, sind aber noch auf feste Themen verdrahtet und deshalb nicht ueber render.py erreichbar.",
-    "eintraege": ["negativ.py", "moderiert.py", "splitscreen.py", "zwei.py", "zweisaetze.py", "formate4.py"]
+    "eintraege": [
+      "negativ.py",
+      "moderiert.py",
+      "splitscreen.py",
+      "zwei.py",
+      "zweisaetze.py",
+      "formate4.py"
+    ]
+  },
+  "vertonung": {
+    "schalter": "--stimme <datei.json>",
+    "skript": "Liste von [Sprecher, Startzeit_in_Sekunden, Text]; Sprecher: Paul oder Paula.",
+    "stimmen": {
+      "Paul": "Paul - Calm Expert",
+      "Paula": "Paula_DE"
+    },
+    "pegel": "je Segment -18 LUFS, Paul +5 dB, Gesamtspur linear auf -14 LUFS",
+    "kosten": "ElevenLabs rechnet pro Zeichen ab; ein 30-Sekunden-Clip hat rund 450 Zeichen.",
+    "schluessel": "ELEVENLABS_API_KEY aus der Umgebung"
+  },
+  "figuren": {
+    "kommentar": "Vorlagen fuer die Figurenformate, entschieden am 04.09.2026.",
+    "paul": "paul-b-retuschiert.png",
+    "paula": "paula-a.png",
+    "axolotl": "axolotl-b.png",
+    "hinweis": "Mundgeometrie und Kopfgroesse stehen in renderer/figuren.py unter FIGUREN. Wird eine Vorlage getauscht, ist das die einzige Stelle zum Nachmessen. paul-b-retuschiert.png ist paul-b.png ohne die zwei Erzeugungsfehler an der Nase; paul-a.png liegt als verworfener Kandidat daneben."
   }
 }
