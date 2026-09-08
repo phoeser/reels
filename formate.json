@@ -1,6 +1,6 @@
 {
   "$kommentar": "Katalog der Videoformate der Reel-Fabrik. render.py --format <schluessel>. Eine Kopie liegt oeffentlich in phoeser/reels, damit das Post-Studio weiss, was es bestellen kann.",
-  "stand": "2026-09-04",
+  "stand": "2026-09-08",
   "ausgabe": {
     "hoch": {
       "breite": 1080,
@@ -424,6 +424,113 @@
         }
       ],
       "hinweis": "Braucht mindestens drei Sprechsegmente. Der Blasentext wird kleiner gesetzt statt abgeschnitten."
+    },
+    "ergo": {
+      "name": "ERGO Typo-Karten",
+      "zweck": "YouTube-Short im ERGO-Corporate-Design: vier Farbflaechen schieben sich von unten ins Bild — Hook, Wendung, Pointe, dann die weisse Karte mit Logo, belegtem Fakt, Quelle und Claim. Fuer lustige Kurzclips zu Zahnzusatz, Sterbegeld, Rechtsschutz und Co. Prototyp fuer ERGO intern; Veroeffentlichung erst nach Freigabe.",
+      "pflicht": [
+        "--produkt",
+        "--hook",
+        "--twist",
+        "--pointe",
+        "--fakt"
+      ],
+      "optional": [
+        "--kopf",
+        "--quelle",
+        "--laenge",
+        "--stimme"
+      ],
+      "quelle": "Freitext; Produktfakten von ergo.de mit Quelle",
+      "felder": [
+        {
+          "id": "produkt",
+          "label": "Produkt (steht als Tag auf jeder Flaeche, waehlt die Farbfolge)",
+          "art": "text",
+          "pflicht": true,
+          "max": 30,
+          "hinweis": "z. B. Zahnzusatz, Sterbegeld, Rechtsschutz"
+        },
+        {
+          "id": "hook",
+          "label": "Flaeche 1 — der Einstieg (Situation, die jeder kennt)",
+          "art": "text",
+          "pflicht": true,
+          "max": 110
+        },
+        {
+          "id": "twist",
+          "label": "Flaeche 2 — die Wendung",
+          "art": "text",
+          "pflicht": true,
+          "max": 110
+        },
+        {
+          "id": "pointe",
+          "label": "Flaeche 3 — die Pointe (gross, kurz)",
+          "art": "text",
+          "pflicht": true,
+          "max": 90
+        },
+        {
+          "id": "fakt",
+          "label": "Weisse Karte — der belegte Satz zum Produkt",
+          "art": "text",
+          "pflicht": true,
+          "max": 170,
+          "hinweis": "Nur, was auf ergo.de steht. Keine Preise oder Leistungen erfinden."
+        },
+        {
+          "id": "kopf",
+          "label": "Ueberschrift der weissen Karte (optional, Standard: Und im Ernst:)",
+          "art": "text",
+          "pflicht": false,
+          "max": 40
+        },
+        {
+          "id": "quelle",
+          "label": "Quelle (optional, z. B. ergo.de/Zahnzusatzversicherung, Stand 09/2026)",
+          "art": "text",
+          "pflicht": false,
+          "max": 90
+        },
+        {
+          "id": "laenge",
+          "label": "Länge",
+          "art": "laenge",
+          "pflicht": false,
+          "werte": [
+            30
+          ]
+        },
+        {
+          "id": "stimme",
+          "art": "datei",
+          "pflicht": false,
+          "label": "Sprechskript (JSON)",
+          "hinweis": "Segmente [Sprecher, Startzeit, Text]; Sprecher ist Paul oder Paula. Vier Bildmarken = vier Segmente; die Stimme darf lockerer erzaehlen als die Karte zeigt. Ohne Skript bleibt der Clip stumm. Kostet ElevenLabs-Credits: rund ein Credit je Zeichen."
+        }
+      ],
+      "aufbau": [
+        {
+          "ab_s": 0.0,
+          "zeigt": "Flaeche 1 (Hauptfarbe) mit Produkt-Tag, Label KENNST DU DAS? und dem Hook, wortweise"
+        },
+        {
+          "ab_s": 7.5,
+          "zeigt": "Flaeche 2 (Dunkel 3) schiebt sich von unten ein, Flaeche 1 bleibt als Streifen: UND DANN + Wendung"
+        },
+        {
+          "ab_s": 15.0,
+          "zeigt": "Flaeche 3 (Dunkel 3): DIE POINTE, groesste Schrift"
+        },
+        {
+          "ab_s": 22.0,
+          "zeigt": "weisse Karte: ERGO-Logo, Ueberschrift in Dunkelrot, Fakt, Quelle, Claim (Einfach, weil's wichtig ist.), ergo.de"
+        }
+      ],
+      "hinweis": "Farbregeln aus dem Brand Guide: ERGO Rot nur fuer Logo und Claim; Ueberschriften in Dunkelrot; Flaechen nur aus den fuenf Gestaltungsfarben (Hauptfarbe/Dunkel 3), Text schwarz auf hell, weiss auf Dunkel 3 (bei Gelb und Orange schwarz). Schrift: Liberation Sans als Arial-Ersatz (FS Me liegt nicht vor). Die Farbfolge haengt am Produktnamen: Zahn/Dental = Gruen-Eisblau-Orange, Sterbe = Violett-Gelb-Gruen, Recht = Eisblau-Orange-Violett; unbekannte Namen bekommen eine feste Folge aus dem Farbrad. --text mit vier |-Teilen (hook|twist|pointe|fakt) geht statt der Einzelschalter.",
+      "beispiel": "python3 render.py --format ergo --produkt Zahnzusatz --hook 'Das wird ein Implantat, sagt der Zahnarzt. Setzen Sie sich erst mal.' --twist 'Ich saß schon. Er meinte den Preis.' --pointe 'Der Festzuschuss der Kasse deckt ungefähr den Stuhl.' --fakt 'Zahnersatz Sofort verdoppelt den Festzuschuss der Kasse – bis zu 100 % der erstattungsfähigen Rechnung, auch bei laufender Behandlung, ohne Wartezeit.' --quelle 'ergo.de/Zahnzusatzversicherung, Stand 09/2026' --out /tmp/ergo-zahn.mp4"
     }
   },
   "noch_nicht_parametrisiert": {
