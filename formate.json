@@ -603,8 +603,8 @@
           "art": "laenge",
           "pflicht": false,
           "werte": [
-            30,
-            20
+            20,
+            30
           ]
         },
         {
@@ -648,27 +648,27 @@
           "zeigt": "Kicker und Kernaussage, wortweise"
         },
         {
-          "ab_s": 7.2,
+          "ab_s": 2.8,
           "zeigt": "Stütze 1 schiebt sich mit Balken von links ein"
         },
         {
-          "ab_s": 12.6,
+          "ab_s": 6.4,
           "zeigt": "Stütze 2"
         },
         {
-          "ab_s": 18.0,
+          "ab_s": 10.0,
           "zeigt": "Stütze 3"
         },
         {
-          "ab_s": 23.4,
+          "ab_s": 14.0,
           "zeigt": "die Stützen verblassen leicht, der Schlusssatz kommt in der Akzentfarbe"
         },
         {
-          "ab_s": -3.6,
+          "ab_s": -3.0,
           "zeigt": "Strich, Name und Rolle"
         }
       ],
-      "hinweis": "--text braucht fünf durch | getrennte Teile: kern | stuetze1 | stuetze2 | stuetze3 | schluss. Ein sechster Teil wird als Leitwort gelesen — das spart eine Eigenschaft in der Bestellung, GitHub nimmt im client_payload höchstens zehn. Leere Stützen sind erlaubt, die Kernaussage nicht. Die Bildmarken oben gelten für 30 Sekunden; intern rechnet der Renderer in Anteilen der Länge.",
+      "hinweis": "--text braucht fünf durch | getrennte Teile: kern | stuetze1 | stuetze2 | stuetze3 | schluss. Ein sechster Teil wird als Leitwort gelesen — das spart eine Eigenschaft in der Bestellung, GitHub nimmt im client_payload höchstens zehn. Leere Stützen sind erlaubt, die Kernaussage nicht. Die Bildmarken oben gelten für 20 Sekunden (die Standardlänge); intern rechnet der Renderer in Anteilen der Länge, derselbe Aufbau trägt also auch bei 30 Sekunden.",
       "beispiel": "python3 render.py --format kernaussage --titel 'KI & Marketing' --text 'Automatisieren verschiebt Engpässe, es beseitigt sie nicht.|Wir haben die Texterstellung halbiert — und warten jetzt auf die Freigabe.|Der Engpass ist nicht die Produktion, sondern die Entscheidung davor.|Wer nur die schnelle Stelle beschleunigt, macht die langsame sichtbarer.|Erst den Engpass finden. Dann automatisieren.|Engpass' --unter 'Bereichsleiter Marketing' --out /tmp/kern.mp4"
     }
   },
