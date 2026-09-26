@@ -1,6 +1,6 @@
 {
   "$kommentar": "Katalog der Videoformate der Reel-Fabrik. render.py --format <schluessel>. Eine Kopie liegt oeffentlich in phoeser/reels, damit das Post-Studio weiss, was es bestellen kann.",
-  "stand": "2026-09-08",
+  "stand": "2026-09-26",
   "ausgabe": {
     "hoch": {
       "breite": 1080,
@@ -531,6 +531,145 @@
       ],
       "hinweis": "Farbregeln aus dem Brand Guide: ERGO Rot nur fuer Logo und Claim; Ueberschriften in Dunkelrot; Flaechen nur aus den fuenf Gestaltungsfarben (Hauptfarbe/Dunkel 3), Text schwarz auf hell, weiss auf Dunkel 3 (bei Gelb und Orange schwarz). Schrift: Liberation Sans als Arial-Ersatz (FS Me liegt nicht vor). Die Farbfolge haengt am Produktnamen: Zahn/Dental = Gruen-Eisblau-Orange, Sterbe = Violett-Gelb-Gruen, Recht = Eisblau-Orange-Violett; unbekannte Namen bekommen eine feste Folge aus dem Farbrad. --text mit vier |-Teilen (hook|twist|pointe|fakt) geht statt der Einzelschalter.",
       "beispiel": "python3 render.py --format ergo --produkt Zahnzusatz --hook 'Das wird ein Implantat, sagt der Zahnarzt. Setzen Sie sich erst mal.' --twist 'Ich saß schon. Er meinte den Preis.' --pointe 'Der Festzuschuss der Kasse deckt ungefähr den Stuhl.' --fakt 'Zahnersatz Sofort verdoppelt den Festzuschuss der Kasse – bis zu 100 % der erstattungsfähigen Rechnung, auch bei laufender Behandlung, ohne Wartezeit.' --quelle 'ergo.de/Zahnzusatzversicherung, Stand 09/2026' --out /tmp/ergo-zahn.mp4"
+    },
+    "kernaussage": {
+      "name": "Kernaussage (LinkedIn)",
+      "zweck": "Pauls Beitrag als Typo-Video: Kernaussage gross, darunter bauen sich drei Stuetzen auf und bleiben stehen, zum Schluss der Satz zum Mitnehmen und der Absender. Stumm lesbar — LinkedIn spielt im Feed ohne Ton ab.",
+      "pflicht": [
+        "--text"
+      ],
+      "optional": [
+        "--titel",
+        "--leitwort",
+        "--unter",
+        "--akzent",
+        "--laenge",
+        "--stimme"
+      ],
+      "quelle": "Freitext aus dem Beitrag",
+      "felder": [
+        {
+          "id": "titel",
+          "label": "Kicker über der Kernaussage (optional)",
+          "art": "text",
+          "pflicht": false,
+          "max": 34
+        },
+        {
+          "id": "kern",
+          "label": "Kernaussage — der eine Satz",
+          "art": "text",
+          "pflicht": true,
+          "max": 120
+        },
+        {
+          "id": "stuetze1",
+          "label": "Stütze 1 — was die Aussage trägt",
+          "art": "text",
+          "pflicht": true,
+          "max": 110
+        },
+        {
+          "id": "stuetze2",
+          "label": "Stütze 2 (optional)",
+          "art": "text",
+          "pflicht": false,
+          "max": 110
+        },
+        {
+          "id": "stuetze3",
+          "label": "Stütze 3 (optional)",
+          "art": "text",
+          "pflicht": false,
+          "max": 110
+        },
+        {
+          "id": "schluss",
+          "label": "Satz zum Mitnehmen",
+          "art": "text",
+          "pflicht": true,
+          "max": 90
+        },
+        {
+          "id": "leitwort",
+          "label": "Leitwort (wird in den Stützen hervorgehoben, optional)",
+          "art": "text",
+          "pflicht": false,
+          "max": 40
+        },
+        {
+          "id": "laenge",
+          "label": "Länge",
+          "art": "laenge",
+          "pflicht": false,
+          "werte": [
+            30,
+            20
+          ]
+        },
+        {
+          "name": "stimme",
+          "art": "datei",
+          "pflicht": false,
+          "label": "Sprechskript (JSON)",
+          "hinweis": "Optional. Das Format ist stumm lesbar gebaut — LinkedIn spielt im Feed ohne Ton ab. Eine Stimme kann dazukommen, muss aber nicht. Kostet ElevenLabs-Credits: rund ein Credit je Zeichen."
+        }
+      ],
+      "bestellung": {
+        "text": [
+          "kern",
+          "stuetze1",
+          "stuetze2",
+          "stuetze3",
+          "schluss",
+          "leitwort"
+        ],
+        "hinweis": "Diese Felder gehen als ein einziges |-getrenntes `text` an die Fabrik. GitHub nimmt im client_payload hoechstens zehn Eigenschaften; ohne das Zusammenfassen waere die Bestellung zu gross."
+      },
+      "ki": {
+        "knopf": "Aus dem Beitrag ableiten",
+        "hinweis": "Die KI schlägt Kernaussage, Stützen und Schlusssatz aus deinem Beitragstext vor",
+        "mindestzeichen": 120,
+        "pflichtschluessel": "KERN",
+        "auftrag": "Mach aus dem Beitrag die Textbausteine fuer ein Hochkantvideo im Format „Kernaussage\". Der Aufbau folgt dem Pyramidenprinzip: zuerst die Aussage, dann was sie traegt, dann der Satz zum Mitnehmen.\nAntworte AUSSCHLIESSLICH mit diesen sieben Zeilen, jede beginnt mit dem Schluesselwort:\nKICKER: (bis 34 Zeichen — das Thema in zwei, drei Woertern)\nKERN: (bis 120 Zeichen — die eine Aussage des Beitrags, als vollstaendiger Satz)\nSTUETZE1: (bis 110 Zeichen — was die Aussage traegt: Beobachtung, Beispiel oder Zahl AUS DEM BEITRAG)\nSTUETZE2: (bis 110 Zeichen)\nSTUETZE3: (bis 110 Zeichen — darf leer bleiben, wenn der Beitrag nur zwei Stuetzen hergibt)\nSCHLUSS: (bis 90 Zeichen — der Satz zum Mitnehmen)\nLEITWORT: (ein bis drei Woerter, die in den Stuetzen vorkommen und hervorgehoben werden)\nNur Aussagen, Zahlen und Namen aus dem Beitrag; nichts dazuerfinden, keine Zahl ohne Beleg im Beitrag.\nKEINE Gesundheits- oder Heilsversprechen und keine Aussagen darueber, wie ein Produkt auf den Koerper wirkt — der Beitrag steht auf einem Profil im Versicherungsumfeld.\nKein Marketing-Sprech, keine Ausrufezeichen, keine Anrede der Leser mit „Du\".",
+        "felder": {
+          "KICKER": "titel",
+          "KERN": "kern",
+          "STUETZE1": "stuetze1",
+          "STUETZE2": "stuetze2",
+          "STUETZE3": "stuetze3",
+          "SCHLUSS": "schluss",
+          "LEITWORT": "leitwort"
+        }
+      },
+      "aufbau": [
+        {
+          "ab_s": 0.0,
+          "zeigt": "Kicker und Kernaussage, wortweise"
+        },
+        {
+          "ab_s": 7.2,
+          "zeigt": "Stütze 1 schiebt sich mit Balken von links ein"
+        },
+        {
+          "ab_s": 12.6,
+          "zeigt": "Stütze 2"
+        },
+        {
+          "ab_s": 18.0,
+          "zeigt": "Stütze 3"
+        },
+        {
+          "ab_s": 23.4,
+          "zeigt": "die Stützen verblassen leicht, der Schlusssatz kommt in der Akzentfarbe"
+        },
+        {
+          "ab_s": -3.6,
+          "zeigt": "Strich, Name und Rolle"
+        }
+      ],
+      "hinweis": "--text braucht fünf durch | getrennte Teile: kern | stuetze1 | stuetze2 | stuetze3 | schluss. Ein sechster Teil wird als Leitwort gelesen — das spart eine Eigenschaft in der Bestellung, GitHub nimmt im client_payload höchstens zehn. Leere Stützen sind erlaubt, die Kernaussage nicht. Die Bildmarken oben gelten für 30 Sekunden; intern rechnet der Renderer in Anteilen der Länge.",
+      "beispiel": "python3 render.py --format kernaussage --titel 'KI & Marketing' --text 'Automatisieren verschiebt Engpässe, es beseitigt sie nicht.|Wir haben die Texterstellung halbiert — und warten jetzt auf die Freigabe.|Der Engpass ist nicht die Produktion, sondern die Entscheidung davor.|Wer nur die schnelle Stelle beschleunigt, macht die langsame sichtbarer.|Erst den Engpass finden. Dann automatisieren.|Engpass' --unter 'Bereichsleiter Marketing' --out /tmp/kern.mp4"
     }
   },
   "noch_nicht_parametrisiert": {
