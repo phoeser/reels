@@ -169,7 +169,19 @@
           "hinweis": "Segmente [Sprecher, Startzeit, Text]; Sprecher ist Paul oder Paula. Ohne Skript bleibt der Clip stumm. Kostet ElevenLabs-Credits: rund ein Credit je Zeichen."
         }
       ],
-      "hinweis": "--text braucht genau vier durch | getrennte Teile: erlaubt | ankommt | gezeigt | pointe. --labels ersetzt die drei Ueberschriften (drei Teile, mit | getrennt).",
+      "bestellung": {
+        "text": [
+          "titel",
+          "erlaubt",
+          "ankommt",
+          "gezeigt",
+          "pointe",
+          "leitwort",
+          "quelle"
+        ],
+        "hinweis": "Diese sieben Felder gehen als ein einziges |-getrenntes `text` an die Fabrik. GitHub nimmt im client_payload hoechstens zehn Eigenschaften; einzeln verschickt kam dieses Format bei voller Belegung auf elf (Befund K-1, 27.09.2026). render.py nimmt sowohl die gebuendelte Form mit sieben Teilen als auch die alte mit vier."
+      },
+      "hinweis": "--text nimmt zwei Formen: vier durch | getrennte Teile (erlaubt | ankommt | gezeigt | pointe), dann kommen Titel, Leitwort und Quelle als eigene Schalter — oder sieben Teile in der gebuendelten Form (titel | erlaubt | ankommt | gezeigt | pointe | leitwort | quelle), die das Studio verschickt. --labels ersetzt die drei Ueberschriften (drei Teile, mit | getrennt).",
       "beispiel": "python3 render.py --format dreizeilen --titel 'Kreatin' --leitwort Kreatin --text 'Erlaubt ist …|An kommt …|Gezeigt ist …|Die Pointe.' --out /tmp/kreatin.mp4"
     },
     "avatare": {
