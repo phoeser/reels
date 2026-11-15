@@ -1,6 +1,6 @@
 {
   "$kommentar": "Katalog der Videoformate der Reel-Fabrik. render.py --format <schluessel>. Eine Kopie liegt oeffentlich in phoeser/reels, damit das Post-Studio weiss, was es bestellen kann.",
-  "stand": "2026-09-26",
+  "stand": "2026-11-15",
   "ausgabe": {
     "hoch": {
       "breite": 1080,
@@ -11,7 +11,7 @@
     },
     "laenge_s": {
       "min": 15,
-      "max": 45,
+      "max": 60,
       "empfohlen": 30
     }
   },
@@ -226,6 +226,8 @@
           "pflicht": false,
           "werte": [
             30,
+            45,
+            60,
             20
           ]
         }
@@ -244,7 +246,7 @@
           "zeigt": "Balkenreihe fuellt sich als Fortschritt"
         }
       ],
-      "hinweis": "Kein Wechselschnitt - beide bleiben im Bild. Der Reiz des Formats ist das Zuhoeren. Ohne --stimme bricht das Format ab."
+      "hinweis": "Kein Wechselschnitt - beide bleiben im Bild. Der Reiz des Formats ist das Zuhoeren. Ohne --stimme bricht das Format ab. Laenge 30, 45 oder 60 Sekunden (seit 15.11.2026) oder 20; ein 60-Sekunden-Skript hat rund 900 Zeichen."
     },
     "axolotl": {
       "name": "Axolotl als Erzaehler",
