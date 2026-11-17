@@ -1,6 +1,6 @@
 {
   "$kommentar": "Katalog der Videoformate der Reel-Fabrik. render.py --format <schluessel>. Eine Kopie liegt oeffentlich in phoeser/reels, damit das Post-Studio weiss, was es bestellen kann.",
-  "stand": "2026-11-15",
+  "stand": "2026-11-17",
   "ausgabe": {
     "hoch": {
       "breite": 1080,
@@ -49,7 +49,9 @@
           "art": "laenge",
           "pflicht": false,
           "werte": [
+            45,
             30,
+            60,
             14
           ]
         },
@@ -68,7 +70,23 @@
         },
         {
           "ab_s": 2.5,
-          "zeigt": "die fuenf Achsen bauen sich im Takt auf"
+          "zeigt": "Achse 1: Human-Evidenz"
+        },
+        {
+          "ab_s": 5.1,
+          "zeigt": "Achse 2: Mechanismus"
+        },
+        {
+          "ab_s": 7.7,
+          "zeigt": "Achse 3: Sicherheits-Datenlage"
+        },
+        {
+          "ab_s": 10.3,
+          "zeigt": "Achse 4: Hype-Abstand"
+        },
+        {
+          "ab_s": 12.9,
+          "zeigt": "Achse 5: Anwendungserfahrung"
         },
         {
           "ab_s": 17.5,
@@ -84,7 +102,12 @@
         }
       ],
       "hinweis": "Ohne berichtslage im Eintrag entfaellt der vorletzte Block; render.py warnt auf stderr. Steht eine id in mehreren Ansichten, meldet render.py das und nennt die Wege: --thema ansicht:id, etwa tipps:hbot.",
-      "beispiel": "python3 render.py --format score --thema glucosamin --laenge 30 --out /tmp/glucosamin.mp4"
+      "beispiel": "python3 render.py --format score --thema glucosamin --laenge 45 --out /tmp/glucosamin.mp4",
+      "skaliert": {
+        "basis_s": 30,
+        "ab_s": 25,
+        "hinweis": "Ab 25 s wachsen alle Marken mit laenge/30 (render.py format_score). Das Studio rechnet die Sprechmarken genauso."
+      }
     },
     "dreizeilen": {
       "name": "Drei Zeilen + Pointe",
