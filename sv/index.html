@@ -28,10 +28,10 @@ const SALT="b89ccb7000892d6b867835f56160f0c4";let KEY=null;
 const hex=h=>new Uint8Array(h.match(/../g).map(b=>parseInt(b,16)));
 async function mk(pw){const m=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
  return crypto.subtle.deriveKey({name:"PBKDF2",salt:hex(SALT),iterations:250000,hash:"SHA-256"},m,{name:"AES-GCM",length:256},false,["decrypt"]);}
-async function dec(path){const r=await fetch(path,{cache:"force-cache"});if(!r.ok)throw new Error("Laden fehlgeschlagen");const b=new Uint8Array(await r.arrayBuffer());
+async function dec(path,c){const r=await fetch(path,{cache:c||"default"});if(!r.ok)throw new Error("Laden fehlgeschlagen");const b=new Uint8Array(await r.arrayBuffer());
  return crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(0,12)},KEY,b.slice(12));}
 async function open_(pw){KEY=await mk(pw.toLowerCase().replace(/\s+/g,""));
- const p=JSON.parse(new TextDecoder().decode(await dec("d/p.bin")));
+ const p=JSON.parse(new TextDecoder().decode(await dec("d/p.bin","no-cache")));
  const st=document.createElement("style");st.textContent=p.style;document.head.appendChild(st);
  const app=document.getElementById("app");app.innerHTML=p.body;document.getElementById("gate").remove();app.hidden=false;document.title="Spot-Vorschau";
  app.querySelectorAll(".ld").forEach(async b=>{const n=b.dataset.v;
